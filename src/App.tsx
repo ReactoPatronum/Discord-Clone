@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import AuthLayout from "./layouts/AuthLayout";
+import UserLayout from "./layouts/UserLayout";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Servers from "./pages/Servers";
+import Server from "./pages/Server";
+import Invite from "./pages/Invite";
+import Channels from "./pages/Channels";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route element={<AuthLayout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+      </Route>
+
+      <Route element={<UserLayout />}>
+        <Route path="/servers" element={<Servers />} />
+
+        <Route path="/servers/:serverId" element={<Server />} />
+        <Route
+          path="/servers/:serverId/channels/:channelId"
+          element={<Channels />}
+        />
+      </Route>
+
+      <Route path="/invite/:id" element={<Invite />} />
+
+      <Route path="*" element={<div>404</div>} />
+    </Routes>
   );
 }
 
